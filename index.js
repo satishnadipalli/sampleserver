@@ -6,6 +6,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get("/",async(req,res)=>{
+    res.send("Hello workld")
+})
+
 app.post("/api/order", async (req, res) => {
     try {
         const razorpay = new Razorpay({
