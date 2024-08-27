@@ -1,13 +1,12 @@
 const express = require("express");
 const Razorpay = require("razorpay");
 const cors = require("cors");
-const app = express();
-const PORT = 5000;
 
+const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post("/order", async (req, res) => {
+app.post("/api/order", async (req, res) => {
     try {
         const razorpay = new Razorpay({
             key_id: "rzp_test_7XMQw1lJ5Iu1y5",
@@ -15,11 +14,11 @@ app.post("/order", async (req, res) => {
         });
 
         const options = {
-            amount: req.body.amount, 
+            amount: req.body.amount,
             currency: req.body.currency,
             receipt: req.body.receiptId,
         };
-        
+
         const order = await razorpay.orders.create(options);
         if (!order) {
             return res.status(500).send("Error occurred");
@@ -31,6 +30,4 @@ app.post("/order", async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
